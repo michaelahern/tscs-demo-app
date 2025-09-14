@@ -1,0 +1,27 @@
+{
+  "image": "mcr.microsoft.com/devcontainers/javascript-node:1-22",
+  "features": {
+    "ghcr.io/devcontainers/features/aws-cli:1": {},
+    "ghcr.io/jsburckhardt/devcontainer-features/uv:1": {},
+    "ghcr.io/tailscale/codespace/tailscale": {}
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "amazonwebservices.amazon-q-vscode",
+        "bierner.markdown-preview-github-styles",
+        "dbaeumer.vscode-eslint",
+        "github.vscode-github-actions"
+      ]
+    }
+  },
+  "onCreateCommand": {
+    "iputils-install": "sudo apt-get update && sudo apt-get install -y iputils-ping netcat-traditional traceroute"
+  },
+  "updateContentCommand": {
+    "npm-install": "npm install"
+  },
+  "postStartCommand": {
+    "tailscale-up": "[ -n \"${TS_AUTH_KEY}\" ] && sudo tailscale up --accept-routes --auth-key=$TS_AUTH_KEY"
+  }
+}
