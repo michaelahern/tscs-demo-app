@@ -1,31 +1,104 @@
+import { DynamoDB } from '@aws-sdk/client-dynamodb';
+import { KMS } from '@aws-sdk/client-kms';
 import { S3 } from '@aws-sdk/client-s3';
-import { promises as dnsPromises } from 'node:dns';
+import { NodeHttpHandler } from '@smithy/node-http-handler';
+import { promises as dns } from 'node:dns';
 
+const DYNAMODB_TABLE_NAME = 'tscs-demo-table-684209394034-us-east-2';
+const DYNAMODB_VPCE_HOSTNAME = 'vpce-05a34e75b50424ab0-lmwrdzf5.dynamodb.us-east-2.vpce.amazonaws.com';
+const KMS_KEY_ALIAS = 'tscs-demo-key-684209394034-us-east-2';
 const S3_BUCKET_NAME = 'tscs-demo-bucket-684209394034-us-east-2';
+
+async function testDynamoDB() {
+    console.log('AWS DynamoDB [Interface Endpoint]');
+
+    try {
+        const dnsResult = await dns.lookup(DYNAMODB_VPCE_HOSTNAME);
+        console.log(`${DYNAMODB_VPCE_HOSTNAME}:`, dnsResult.address);
+
+        const dynamodb = new DynamoDB({
+            region: 'us-east-2',
+            endpoint: `https://${DYNAMODB_VPCE_HOSTNAME}`,
+            requestHandler: new NodeHttpHandler({
+                connectionTimeout: 5000,
+                socketTimeout: 5000
+            })
+        });
+
+        const key = crypto.randomUUID();
+
+        const putItem = await dynamodb.putItem({
+            TableName: DYNAMODB_TABLE_NAME,
+            Item: {
+                id: { S: key },
+                value: { S: 'Hello World' }
+            }
+        });
+        console.log('Put Item:', key, putItem.$metadata.httpStatusCode);
+
+        const getItem = await dynamodb.getItem({
+            TableName: DYNAMODB_TABLE_NAME,
+            Key: {
+                id: { S: key }
+            }
+        });
+        console.log('Get Item:', getItem.Item);
+    }
+    catch (err: unknown) {
+        console.error(err instanceof Error ? err.message : err);
+    }
+}
+
+async function testKMS() {
+    console.log('AWS KMS [Interface Endpoint with VPC Private DNS]');
+
+    try {
+        const dnsResult = await dns.lookup('kms.us-east-2.amazonaws.com');
+        console.log(`kms.us-east-2.amazonaws.com:`, dnsResult.address);
+
+        const kms = new KMS({
+            region: 'us-east-2'
+        });
+
+        const dek = await kms.generateDataKey({ KeyId: `alias/${KMS_KEY_ALIAS}`, KeySpec: 'AES_256' });
+        console.log('Generate Data Key:', dek.KeyId, dek.$metadata.httpStatusCode, Buffer.from(dek.Plaintext ?? '').toString('base64'));
+    }
+    catch (err: unknown) {
+        console.error(err instanceof Error ? err.message : err);
+    }
+}
 
 async function testS3() {
     console.log('AWS S3 [Gateway Endpoint]');
-    const dnsResult = await dnsPromises.lookup('s3.us-east-2.amazonaws.com');
-    console.log('s3.us-east-2.amazonaws.com:', dnsResult.address);
 
-    const s3 = new S3({
-        region: 'us-east-2'
-    });
+    try {
+        const dnsResult = await dns.lookup('s3.us-east-2.amazonaws.com');
+        console.log('s3.us-east-2.amazonaws.com:', dnsResult.address);
 
-    const key = crypto.randomUUID();
+        const s3 = new S3({
+            region: 'us-east-2'
+        });
 
-    const putObject = await s3.putObject({ Bucket: S3_BUCKET_NAME, Key: key, Body: 'Hello World!' });
-    console.log('Put Object:', key, putObject.$metadata.httpStatusCode);
+        const key = crypto.randomUUID();
 
-    const getObject = await s3.getObject({ Bucket: S3_BUCKET_NAME, Key: key });
-    getObject.Body?.transformToString().then((data) => {
-        console.log('Get Object:', key, data);
-    });
+        const putObject = await s3.putObject({ Bucket: S3_BUCKET_NAME, Key: key, Body: 'Hello World!' });
+        console.log('Put Object:', key, putObject.$metadata.httpStatusCode);
+
+        const getObject = await s3.getObject({ Bucket: S3_BUCKET_NAME, Key: key });
+        const getObjectBody = await getObject.Body?.transformToString();
+        console.log('Get Object:', key, getObjectBody);
+    }
+    catch (err: unknown) {
+        console.error(err instanceof Error ? err.message : err);
+    }
 }
 
 async function main() {
-    await testS3();
+    await testDynamoDB();
     console.log();
+    await testKMS();
+    console.log();
+    await testS3();
 }
 
 main().catch(err => console.error(err));
