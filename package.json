@@ -1,0 +1,31 @@
+{
+  "name": "tscs-demo-app",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "app": "npm run build && node ./dist/app.js",
+    "build": "npm run lint && tsc",
+    "clean": "rimraf ./dist",
+    "lint": "eslint --max-warnings=0",
+    "lint-fix": "eslint --max-warnings=0 --fix"
+  },
+  "dependencies": {
+    "@aws-sdk/client-s3": "^3",
+    "@aws-sdk/client-sqs": "^3"
+  },
+  "devDependencies": {
+    "@eslint/json": "^0",
+    "@eslint/markdown": "^7",
+    "@stylistic/eslint-plugin": "^5",
+    "@types/node": "^22",
+    "eslint": "^9",
+    "eslint-plugin-jsonc": "^2",
+    "eslint-plugin-yml": "^1",
+    "rimraf": "^6",
+    "typescript": "~5.9",
+    "typescript-eslint": "^8"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}

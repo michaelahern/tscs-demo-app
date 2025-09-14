@@ -1,0 +1,15 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "app",
+      "preLaunchTask": "npm: build",
+      "program": "${workspaceFolder}/dist/app.js",
+      "skipFiles": [
+        "<node_internals>/**"
+      ]
+    }
+  ]
+}
