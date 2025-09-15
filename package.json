@@ -12,13 +12,16 @@
   "dependencies": {
     "@aws-sdk/client-dynamodb": "^3",
     "@aws-sdk/client-kms": "^3",
-    "@aws-sdk/client-s3": "^3"
+    "@aws-sdk/client-s3": "^3",
+    "@aws-sdk/client-secrets-manager": "^3",
+    "pg": "^8"
   },
   "devDependencies": {
     "@eslint/json": "^0",
     "@eslint/markdown": "^7",
     "@stylistic/eslint-plugin": "^5",
     "@types/node": "^22",
+    "@types/pg": "^8",
     "eslint": "^9",
     "eslint-plugin-jsonc": "^2",
     "eslint-plugin-yml": "^1",
