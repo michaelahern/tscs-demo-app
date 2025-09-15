@@ -57,7 +57,7 @@ async function testKMS() {
 
     try {
         const dnsResult = await DNS.lookup('kms.us-east-2.amazonaws.com');
-        console.log(`kms.us-east-2.amazonaws.com:`, dnsResult.address);
+        console.log('kms.us-east-2.amazonaws.com:', dnsResult.address);
 
         const kms = new KMS({
             region: 'us-east-2'
@@ -80,6 +80,9 @@ async function testRDS() {
         if (secret.SecretString === undefined) throw new Error('Database credentials not accessible...');
         const credentials = JSON.parse(secret.SecretString);
         console.log('Credentials:', credentials);
+
+        const dnsResult = await DNS.lookup(credentials.host);
+        console.log(`${credentials.host}:`, dnsResult.address);
 
         const client = new Postgres({
             host: credentials.host,
