@@ -86,12 +86,13 @@ async function testRDS() {
             port: credentials.port,
             user: credentials.username,
             password: credentials.password,
-            ssl: { rejectUnauthorized: false }
+            ssl: { rejectUnauthorized: false },
+            connectionTimeoutMillis: 5000
         });
 
         await client.connect();
         const result = await client.query('SELECT version()');
-        console.log('Database version:', result.rows[0].version);
+        console.log('SELECT version():', result.rows[0].version);
         await client.end();
     }
     catch (err: unknown) {
