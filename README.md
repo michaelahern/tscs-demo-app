@@ -62,7 +62,7 @@ Socket timed out without establishing a connection within 5000 ms
 
 AWS KMS [Interface Endpoint with VPC Private DNS]
 kms.us-east-2.amazonaws.com: 3.146.14.233
-User: arn:aws:iam::684209394034:user/me is not authorized to perform: kms:GenerateDataKey on resource: arn:aws:kms:us-east-2:684209394034:key/42160ee4-dd47-4056-8807-46c3fb1563cb with an explicit deny in a resource-based policy
+Role: arn:aws:iam::684209394034:role/developer is not authorized to perform: kms:GenerateDataKey on resource: arn:aws:kms:us-east-2:684209394034:key/42160ee4-dd47-4056-8807-46c3fb1563cb with an explicit deny in a resource-based policy
 
 AWS RDS Aurora Serverless v2 [Elastic Network Interface]
 Credentials: {
@@ -78,5 +78,5 @@ timeout expired
 
 AWS S3 [Gateway Endpoint]
 s3.us-east-2.amazonaws.com: 52.219.229.137
-User: arn:aws:iam::684209394034:user/me is not authorized to perform: s3:PutObject on resource: "arn:aws:s3:::tscs-demo-bucket-684209394034-us-east-2/26289a63-da13-48e5-ae30-1ecc318162ea" with an explicit deny in a resource-based policy
+Role: arn:aws:iam::684209394034:role/developer is not authorized to perform: s3:PutObject on resource: "arn:aws:s3:::tscs-demo-bucket-684209394034-us-east-2/26289a63-da13-48e5-ae30-1ecc318162ea" with an explicit deny in a resource-based policy
 ```
