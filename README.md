@@ -9,7 +9,7 @@ Tailscale Configuration
    * See .devcontainer/devcontainer.json [L6](https://github.com/michaelahern/tscs-demo-app/blob/main/.devcontainer/devcontainer.json#L6) & [L26](https://github.com/michaelahern/tscs-demo-app/blob/main/.devcontainer/devcontainer.json#L26)
  * TS_AUTH_KEY env var injected into the container
 
-AWS 
+AWS Configuration
  * AWS CLI feature configured in a [Codespaces devcontainer](https://containers.dev/)
    * See .devcontainer/devcontainer.json [L4](https://github.com/michaelahern/tscs-demo-app/blob/main/.devcontainer/devcontainer.json#L4)
  * AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, AWS_SESSION_TOKEN, & AWS_DEFAULT_REGION env vars injected into the container
