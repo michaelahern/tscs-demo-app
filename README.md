@@ -2,7 +2,21 @@
 
 A demo of using Tailscale and GitHub Codespaces for AWS cloud native development.
 
+## The Environment
+
+Tailscale 
+ * Tailscale [feature](https://tailscale.com/kb/1160/github-codespaces) configured in a [Codespaces devcontainer](https://containers.dev/)
+   * See .devcontainer/devcontainer.json [L6](https://github.com/michaelahern/tscs-demo-app/blob/main/.devcontainer/devcontainer.json#L6) & [L26](https://github.com/michaelahern/tscs-demo-app/blob/main/.devcontainer/devcontainer.json#L26)
+ * TS_AUTH_KEY env var injected into the container
+
+AWS 
+ * AWS CLI feature configured in a [Codespaces devcontainer](https://containers.dev/)
+   * See .devcontainer/devcontainer.json [L4](https://github.com/michaelahern/tscs-demo-app/blob/main/.devcontainer/devcontainer.json#L4)
+ * AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, AWS_SESSION_TOKEN, & AWS_DEFAULT_REGION env vars injected into the container
+
 ## The Demo
+
+### Tailscale Connected
 
 ```bash
 $ sudo tailscale up
@@ -35,7 +49,11 @@ AWS S3 [Gateway Endpoint]
 s3.us-east-2.amazonaws.com: 52.219.111.65
 Put Object: 4eb12306-e235-4400-9bba-979716b130aa 200
 Get Object: 4eb12306-e235-4400-9bba-979716b130aa Hello World!
+```
 
+### Tailscale Disconnected
+
+```bash
 $ sudo tailscale down
 $ npm run app
 AWS DynamoDB [Interface Endpoint]
