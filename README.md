@@ -4,7 +4,7 @@ A demo of using Tailscale and GitHub Codespaces for AWS cloud native development
 
 ## The Environment
 
-Tailscale 
+Tailscale Configuration
  * Tailscale [feature](https://tailscale.com/kb/1160/github-codespaces) configured in a [Codespaces devcontainer](https://containers.dev/)
    * See .devcontainer/devcontainer.json [L6](https://github.com/michaelahern/tscs-demo-app/blob/main/.devcontainer/devcontainer.json#L6) & [L26](https://github.com/michaelahern/tscs-demo-app/blob/main/.devcontainer/devcontainer.json#L26)
  * TS_AUTH_KEY env var injected into the container
