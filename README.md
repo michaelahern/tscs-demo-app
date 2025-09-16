@@ -2,7 +2,21 @@
 
 A demo of using Tailscale and GitHub Codespaces for AWS cloud native development.
 
+## The Environment
+
+Tailscale Configuration
+ * Tailscale [feature](https://tailscale.com/kb/1160/github-codespaces) configured in a [Codespaces devcontainer](https://containers.dev/)
+   * See .devcontainer/devcontainer.json [L6](https://github.com/michaelahern/tscs-demo-app/blob/main/.devcontainer/devcontainer.json#L6) & [L26](https://github.com/michaelahern/tscs-demo-app/blob/main/.devcontainer/devcontainer.json#L26)
+ * TS_AUTH_KEY env var injected into the container
+
+AWS Configuration
+ * AWS CLI feature configured in a [Codespaces devcontainer](https://containers.dev/)
+   * See .devcontainer/devcontainer.json [L4](https://github.com/michaelahern/tscs-demo-app/blob/main/.devcontainer/devcontainer.json#L4)
+ * AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, AWS_SESSION_TOKEN, & AWS_DEFAULT_REGION env vars injected into the container
+
 ## The Demo
+
+### Tailscale Connected
 
 ```bash
 $ sudo tailscale up
@@ -35,7 +49,11 @@ AWS S3 [Gateway Endpoint]
 s3.us-east-2.amazonaws.com: 52.219.111.65
 Put Object: 4eb12306-e235-4400-9bba-979716b130aa 200
 Get Object: 4eb12306-e235-4400-9bba-979716b130aa Hello World!
+```
 
+### Tailscale Disconnected
+
+```bash
 $ sudo tailscale down
 $ npm run app
 AWS DynamoDB [Interface Endpoint]
@@ -44,7 +62,7 @@ Socket timed out without establishing a connection within 5000 ms
 
 AWS KMS [Interface Endpoint with VPC Private DNS]
 kms.us-east-2.amazonaws.com: 3.146.14.233
-User: arn:aws:iam::684209394034:user/me is not authorized to perform: kms:GenerateDataKey on resource: arn:aws:kms:us-east-2:684209394034:key/42160ee4-dd47-4056-8807-46c3fb1563cb with an explicit deny in a resource-based policy
+Role: arn:aws:iam::684209394034:role/developer is not authorized to perform: kms:GenerateDataKey on resource: arn:aws:kms:us-east-2:684209394034:key/42160ee4-dd47-4056-8807-46c3fb1563cb with an explicit deny in a resource-based policy
 
 AWS RDS Aurora Serverless v2 [Elastic Network Interface]
 Credentials: {
@@ -60,5 +78,5 @@ timeout expired
 
 AWS S3 [Gateway Endpoint]
 s3.us-east-2.amazonaws.com: 52.219.229.137
-User: arn:aws:iam::684209394034:user/me is not authorized to perform: s3:PutObject on resource: "arn:aws:s3:::tscs-demo-bucket-684209394034-us-east-2/26289a63-da13-48e5-ae30-1ecc318162ea" with an explicit deny in a resource-based policy
+Role: arn:aws:iam::684209394034:role/developer is not authorized to perform: s3:PutObject on resource: "arn:aws:s3:::tscs-demo-bucket-684209394034-us-east-2/26289a63-da13-48e5-ae30-1ecc318162ea" with an explicit deny in a resource-based policy
 ```
