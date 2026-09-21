@@ -7,9 +7,9 @@ import { promises as DNS } from 'node:dns';
 import { Client as Postgres } from 'pg';
 
 const DYNAMODB_TABLE_NAME = 'tscs-demo-table-684209394034-us-east-2';
-const DYNAMODB_VPCE_HOSTNAME = 'vpce-05a34e75b50424ab0-lmwrdzf5.dynamodb.us-east-2.vpce.amazonaws.com';
+const DYNAMODB_VPCE_HOSTNAME = 'vpce-066bade1716ba5d88-pbfa7ixd.dynamodb.us-east-2.vpce.amazonaws.com';
 const KMS_KEY_ALIAS = 'tscs-demo-key-684209394034-us-east-2';
-const RDS_SECRET_NAME = 'AuroraClusterSecret8E4F2BC8-3XcGTtJyKDpt';
+const RDS_SECRET_NAME = 'AuroraClusterSecret8E4F2BC8-3YA99snDcJsn';
 const S3_BUCKET_NAME = 'tscs-demo-bucket-684209394034-us-east-2';
 
 async function testDynamoDB() {
